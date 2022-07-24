@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: ecommerce
+  datasource:
+    driverClassName: "com.mysql.jdbc.Driver"
+    url: "jdbc:mysql://localhost:3306/ecommerce?autoreconnect=true"
+    password: "password"
+    username: "ecommerce"
+    testOnBorrow: true
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: "SELECT 1"
+    max-active: 15
+    max-idle: 10
+    max-wait: 8000
+flyway:
+  url: "jdbc:mysql://localhost:3306/ecommerce"
+  schemas: ecommerce
+  user: root
+  password: password
+
+jwt:
+  secret: jwt.secret
+  expiresIn: 36000
+  appName: ecommerce
+  header: Authorization
+
+storage:
+  location: "./uploads"
+
+redis:
+  hostname: localhost
+  port: 6379

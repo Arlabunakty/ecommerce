@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  api:
+    container_name: ecommerce
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/ecommerce?autoreconnect=true
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_USERNAME: ecommerce
+      REDIS_HOSTNAME: redis
+    ports:
+      - 8080:8080
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+  database:
+    container_name: mysql
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: ecommerce
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: ecommerce
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      timeout: 20s
+      retries: 10
+  redis:
+    container_name: redis
+    image: "redis:alpine"
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      interval: 1s
+      timeout: 3s
+      retries: 5
