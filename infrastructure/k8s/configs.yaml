@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: general-cm
+data:
+  MYSQL_ROOT_PASSWORD: db
+  MYSQL_USER: ecommerce
+  MYSQL_PASSWORD: password
+  MYSQL_DATABASE: ecommerce
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/ecommerce?autoreconnect=true
+  SPRING_DATASOURCE_PASSWORD: password
+  SPRING_DATASOURCE_USERNAME: ecommerce
+  REDIS_HOSTNAME: redis
